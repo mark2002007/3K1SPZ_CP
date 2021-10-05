@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace _3K1SPZ_CP
         private string login { get; set; }
         private List<Order> orders { get; set; }
         private List<Order> orders_filtered { get; set; }
+        private List<Comment> comments {  get; set; }
         public consoleUI()
         {
             login = "";
@@ -63,7 +65,10 @@ namespace _3K1SPZ_CP
                 Console.Write("Login : "); login = Console.ReadLine();
                 Console.Write("Password : "); password = Console.ReadLine();
             } while (!userDAL.CheckPassword(login, password));
+            //login = "gerik123";
             this.login = login;
+            RefreshOrdersList();
+            RefreshCommentsList();
             CallMainPage();
         }
         //===========================Log -> Main
@@ -71,44 +76,52 @@ namespace _3K1SPZ_CP
         {
             Console.WriteLine("MAIN PAGE...");
             Menu("===MAIN MENU===",
-                new[] { "Role Page", "Order History", "Exit" },
-                new Action[] { CallRolePage, CallOrderHistory, GoToExit });
+                new[] { "Role Page", "Orders & Comments", "Exit"},
+                new Action[] { CallRolePage, CallOrdersCommentsPage, GoToExit });
         }
-        //===========================Main -> Role or OrderHistory
+        //===========================Main -> Role/OrderHistory
         private void CallRolePage()
         {
-            Menu("Role Page", new [] {"Profile Info", "Settings", "Exit"}, new Action[]{ShowProfileInfo, CallProfileSettings, GoToExit});
+            Menu("Role Page", new [] {"Profile Info", "Settings", "Logout","Back"},
+                                        new Action[]{ShowProfileInfo, CallProfileSettings, CallLogPage,GoToExit});
         }
 
+        //Role Page -> Profile Info/Settings
         private void CallProfileSettings()
         {
-            Menu("Settings", new[] { "Change Password", "Change Display Name", "Exit" }, new Action[] { ChangeUserPassword, ChangeUserDisplayName, GoToExit });
+            Menu("Settings", new[] { "Change Password", "Change Display Name", "Back" }, new Action[] { ChangeUserPassword, ChangeUserDisplayName, GoToExit });
         }
 
-        private void ShowProfileInfo()
+        private void CallOrdersCommentsPage()
         {
-            var user_info = userDAL.GetUserInfo(login);
-            Console.WriteLine("{0,-25}{1,-20}{2,-20}", "Display Name", "Login", "Password");
-            Console.WriteLine(new string('=',65));
-            Console.WriteLine("{0,-25}{1,-20}{2,-20}",user_info.Item3, user_info.Item1, user_info.Item2);
-            Console.ReadKey();
+            Menu("Orders & Comments",
+                new[] {"Orders", "Comments", "Back"},
+                new Action[] { CallOrdersPage, CallCommentsPage ,GoToExit });
         }
 
-        private void CallOrderHistory()
+        private void CallOrdersPage()
         {
-            RefreshOrdersList();
-            Menu("Options",
-                new[] { "Sort", "Search", "Repeat Order", "Result", "Exit" },
-                new Action[] { CallSortPage, CallSearchPage, CallRepeatOrderPage, CallResultPage, GoToExit });
+            Menu("Orders",
+                new[] { "Sort", "Search", "Result","Back" },
+                new Action[] { CallSortPage, CallSearchPage, ShowOrdersResult, GoToExit });
         }
-        //===========================OrderHistory -> Sort or Search or Repeat Order or Show Result
+
+        private void CallCommentsPage()
+        {
+            Menu("Comments",
+                new[] { "Add Comment", "All Comments", "Back" },
+                new Action[] { AddComment, ShowComments, GoToExit });
+        }
+
+
+
+        //===========================OrderHistory -> Sort / Search / Repeat Order / Show Result / Write Comment
         private void CallSortPage()
         {
             Menu("Sort",
-                new[] { "Ascending", "Descending", "Exit" },
+                new[] { "Ascending", "Descending", "Back" },
                 new Action[] { SortOrderHistoryASC, SortOrderHistoryDESC, GoToExit });
-        }
-        //---------------------------Sort -> ASC or DESC
+        } //Sort -> ASC / DESC
         private void CallRepeatOrderPage()
         {
             Console.WriteLine("\tRepeat order");
@@ -123,14 +136,40 @@ namespace _3K1SPZ_CP
             Console.Write("Product name : "); string product_name = Console.ReadLine();
             orders_filtered = orders.FindAll(order => order.product == product_name);
         }
-        private void CallResultPage()
+        private void ShowOrdersResult()
         {
-            Console.WriteLine("{0,-10}{1,-15}{2,-20}\n{3}", "Order ID", "Product", "Order Time", new string('=', 45));
+            Console.WriteLine("{0,-10}{1,-15}{2,-25}{3,-20}\n{4}", "Order ID", "Product", "Order Time","Comments", new string('=', 58));
             foreach (var order in orders_filtered)
-                Console.WriteLine("{0,-10}{1,-15}{2,-20}", order.id, order.product, order.order_time);
+            {
+                Console.Write("{0,-10}{1,-15}{2,-25}", order.id, order.product, order.order_time);
+                foreach (var comment in comments.Where(comment => comment.order_id == order.id)
+                    .Select((val, i) => (val, i)))
+                {
+                    if (comment.i != 0)
+                        Console.Write(new string(' ', 50));
+                    Console.WriteLine($"{comment.val.text}");
+                }
+                if (comments.Where(comment => comment.order_id == order.id).Count() == 0)
+                    Console.WriteLine("...");
+            }
+            Console.ReadKey();
+        }
+        private void ShowComments()
+        {
+            Console.WriteLine("{0,-15}{1,-15}{2,-25}{3,-5}\n{4}", "ID", "Order ID", "Order Time", "Text", new string('=', 59));
+            foreach (var comment in comments)
+                Console.WriteLine("{0,-15}{1,-15}{2,-25}{3,-5}", comment.id, comment.order_id, comment.comment_time, comment.text);
             Console.ReadKey();
         }
         //===========================
+        private void ShowProfileInfo()
+        {
+            var user_info = userDAL.GetUserInfo(login);
+            Console.WriteLine("{0,-25}{1,-20}{2,-20}", "Display Name", "Login", "Password");
+            Console.WriteLine(new string('=', 65));
+            Console.WriteLine("{0,-25}{1,-20}{2,-20}", user_info.Item3, user_info.Item1, user_info.Item2);
+            Console.ReadKey();
+        }
         private void SortOrderHistoryASC() => orders_filtered = orders.OrderBy(order => order.product).ToList();
         private void SortOrderHistoryDESC() => orders_filtered = orders.OrderByDescending(order => order.product).ToList();
         private void GoToExit() => exit = true;
@@ -139,13 +178,16 @@ namespace _3K1SPZ_CP
             orders = ordersLogDAL.GetOrderHistoryOfUser(login);
             orders_filtered = ordersLogDAL.GetOrderHistoryOfUser(login);
         }
+        private void RefreshCommentsList()
+        {
+            comments = commentsDAL.GetCommentsOfUser(login);
+        }
         private void ChangeUserDisplayName()
         {
             Console.WriteLine("\tChange Display Name");
             Console.Write("New name : "); string new_disp_name = Console.ReadLine();
             userDAL.ChangeDispNameByLogin(login, new_disp_name);
         }
-
         private void ChangeUserPassword()
         {
 
@@ -153,5 +195,17 @@ namespace _3K1SPZ_CP
             Console.Write("New password : "); string new_password = Console.ReadLine();
             userDAL.ChangePasswordByLogin(login, new_password);
         }
+        private void AddComment()
+        {
+            Console.Write("Order id : "); int order_id = int.Parse(Console.ReadLine());
+            if (ordersLogDAL.OrderIDToUserCheck(login, order_id))
+            {
+                Console.Write("Comment : "); string comment_text = Console.ReadLine();
+                commentsDAL.AddComment(order_id, comment_text);
+            }
+            RefreshCommentsList();
+        }
+        
     }
 }
+//"Sort", "Search", "Repeat Order", "Write Comment", "Result","Comments", "Back"

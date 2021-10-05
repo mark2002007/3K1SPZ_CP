@@ -38,14 +38,14 @@ namespace _3K1SPZ_CP.DAL
 	                                                ON orders_log.user_login = users.login
                                                 JOIN products
 	                                                ON orders_log.product_name = products.name
-                                                WHERE users.login = @login;", connection);
+                                                WHERE users.login = @login", connection);
                 command.Parameters.Add(new SqlParameter("@login", login));
                 List<Order> orders = new();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        orders.Add(new Order()
+                        orders.Add(new Order
                         {
                             id = (int)reader["OrderID"],
                             user_login = (string)reader["UserLogin"],

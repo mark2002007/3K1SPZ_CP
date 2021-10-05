@@ -20,7 +20,7 @@ namespace _3K1SPZ_CP
         {
             consoleUI ui = new();
             ui.CallLogPage();
-        }
+         }
     }
 }
     
