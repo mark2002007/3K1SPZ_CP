@@ -1,6 +1,6 @@
-﻿using _3K1SPZ_CP.DAL;
-
-namespace _3K1SPZ_CP;
+﻿
+using _3K1SPZ_CP;
+using _3K1SPZ_CP.DAL;
 
 public class ConsoleUI
 {

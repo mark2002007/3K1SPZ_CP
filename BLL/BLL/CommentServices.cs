@@ -1,4 +1,7 @@
-﻿namespace _3K1SPZ_CP.DAL;
+﻿
+
+using _3K1SPZ_CP;
+using _3K1SPZ_CP.DAL;
 
 public class CommentServices
 {
