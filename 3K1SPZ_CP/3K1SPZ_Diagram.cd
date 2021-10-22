@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="_3K1SPZ_CP.ConsoleUI" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgiAAA5ABAAAgCAAAKQAiAAMAIYAIAAMAAAACYAIAg=</HashCode>
+      <FileName>ConsoleUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_3K1SPZ_CP.Helper" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Tools\Helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_3K1SPZ_CP.OrderDTO">
+    <Position X="6.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAAAAAQAAAAAAAAgAAAAAAAAAAAEAAAAIAAA=</HashCode>
+      <FileName>Models\OrderDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_3K1SPZ_CP.UserDTO">
+    <Position X="2.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAQCAAAAAAAAAAAAAAAACAAEQAAAAAAA=</HashCode>
+      <FileName>Models\UserDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_3K1SPZ_CP.UserServices">
+    <Position X="2.75" Y="0.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAABAAAAAAAAAAAAAAAAAAAAAAIIAAAA=</HashCode>
+      <FileName>BLL\UserServices.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_3K1SPZ_CP.DAL.OrderRepository" BaseTypeListCollapsed="true">
+    <Position X="6.75" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAQAABAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DAL\Repositories\OrderRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="_3K1SPZ_CP.DAL.OrderServices">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAEAAAAAAAgAAABAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BLL\OrderServices.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_3K1SPZ_CP.DAL.UserRepository" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAABAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>DAL\Repositories\UserRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="_3K1SPZ_CP.DAL.CommentRepository" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DAL\CommentRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="_3K1SPZ_CP.DAL.CommentServices">
+    <Position X="4.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DAL\CommentServices.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="_3K1SPZ_CP.DAL.CommentDTO">
+    <Position X="4.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEACAAAAAA=</HashCode>
+      <FileName>DAL\CommentDTO.cs</FileName>
+      <NewMemberFileName>DAL\CommentDto.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="_3K1SPZ_CP.IUserRepository">
+    <Position X="2.75" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAABAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>DAL\Interfaces\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_3K1SPZ_CP.DAL.ICommentRepository">
+    <Position X="4.75" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DAL\ICommentRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="_3K1SPZ_CP.DAL.IOrderRepository">
+    <Position X="6.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAABAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DAL\Repositories\IOrderRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
