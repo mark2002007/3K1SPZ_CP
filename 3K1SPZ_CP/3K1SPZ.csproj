@@ -9,16 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Tools\**" />
+    <EmbeddedResource Remove="Tools\**" />
+    <None Remove="Tools\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\UI\UI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Tools\" />
   </ItemGroup>
 
 </Project>

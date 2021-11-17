@@ -1,7 +1,10 @@
-﻿namespace _3K1SPZ_CP.DAL;
+﻿using DTO;
 
-public interface ICommentRepository
+namespace DAL
 {
-    public void AddComment(int orderId, string commentText);
-    public List<CommentDTO> GetCommentsOfUser(int id);
+    public interface ICommentRepository
+    {
+        public void AddComment(int orderId, string commentText);
+        public List<CommentDTO> GetCommentsOfUser(int id);
+    }
 }

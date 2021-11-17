@@ -1,8 +1,11 @@
-﻿namespace _3K1SPZ_CP.DAL;
+﻿using DTO;
 
-public interface IOrderRepository
+namespace DAL
 {
-    public void CreateOrder(int userId, int productId);
-    public OrderDTO Get(int id); 
-    public List<OrderDTO> GetOrderHistory(int userId);
+    public interface IOrderRepository
+    {
+        public void CreateOrder(int userId, int productId);
+        public OrderDTO Get(int id); 
+        public List<OrderDTO> GetOrderHistory(int userId);
+    }
 }

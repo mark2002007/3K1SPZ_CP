@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _3K1SPZ_CP.DAL.Repositories
+namespace DAL
 {
     public abstract class BaseRepository
     {

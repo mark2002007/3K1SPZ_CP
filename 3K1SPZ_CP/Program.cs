@@ -1,10 +1,14 @@
-﻿namespace _3K1SPZ_CP;
+﻿using Tools;
+
+namespace _3K1SPZ_CP;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        ConsoleUI ui = new();
-        ui.LogPage();
+        Console.WriteLine(PasswordHasher.Check("1000.9c0goO1Rt87Zt1CxK0ZpSQ==.UHaX+mCpHAD1StkvM3d4dfu89HHjWE5AannPbYbzD/Q=", "1111"));
+        //ConsoleUI ui = new();
+        //ui.LogPage();
+
     }
 }

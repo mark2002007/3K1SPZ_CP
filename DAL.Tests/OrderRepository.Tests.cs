@@ -1,38 +1,85 @@
-﻿using _3K1SPZ_CP.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using _3K1SPZ_CP.DAL;
-using Xunit;
+﻿//using DTO;
+//using Xunit;
 
-namespace DAL.Tests
-{
-    public abstract class OrderRepositoryTestsBase : IDisposable
-    {
-        protected string _connectionString { get; set; }
+//namespace DAL.Tests
+//{
+//    public class OrderRepositoryTests : RepositoryTestsBase
+//    {
+//        //[Fact]
+//        //public void GetOrderHistory_Test()
+//        //{
+//        //    //Arrange
+//        //    OrderRepository orderRepository = new OrderRepository(_connectionString);
+//        //    List<OrderDTO> expected = new List<OrderDTO>()
+//        //    {
+//        //        new OrderDTO
+//        //        {
+//        //            UserId = 1,
+//        //            ProductId = 1,
+//        //            ProductName = "Burger"
+//        //        },
+//        //        new OrderDTO
+//        //        {
+//        //            UserId = 1,
+//        //            ProductId = 4,
+//        //            ProductName = "Laptop"
+//        //        },
+//        //        new OrderDTO
+//        //        {
+//        //            UserId = 1,
+//        //            ProductId = 7,
+//        //            ProductName = "Hat"
+//        //        }
+//        //    };
+//        //    //Act
+//        //    List<OrderDTO> actual = orderRepository.GetOrderHistory(1);
+//        //    //Assert
+//        //    Assert.Equal(actual.Count, expected.Count);
+//        //    for (int i = 0; i < actual.Count; i++)
+//        //    {
+//        //        Assert.Equal(actual[i].ProductId,    expected[i].ProductId);
+//        //        Assert.Equal(actual[i].ProductName, expected[i].ProductName);
+//        //        Assert.Equal(actual[i].UserId, expected[i].UserId);
+//        //    }
+//        //}
+//        [Fact]
+//        public void Get_Test()
+//        {
+//            //Arrange
+//            OrderRepository orderRepository = new OrderRepository(_connectionString);
+//            OrderDTO expected = new OrderDTO
+//            {
+//                UserId = 1,
+//                ProductId = 1,
+//                ProductName = "Burger"
+//            };
 
-        protected OrderRepositoryTestsBase()
-        {
-            _connectionString = "Server=DESKTOP-9GGT2EU;Database=3K1SPZ_Tests; Integrated Security=true";
-        }
-        public void Dispose()
-        {
-            OrderRepository orderRepository = new OrderRepository(_connectionString);
-            orderRepository.DeleteAll();
-            UserRepository userRepository = new UserRepository(_connectionString);
-            userRepository.DeleteAll();
-        }
-    }
-    public class OrderRepositoryTests : OrderRepositoryTestsBase
-    {
-        [Fact]
-        public void GetOrderHistory_Test()
-        {
-            OrderRepository orderRepository = new OrderRepository(_connectionString);
-            UserRepository userRepository = new UserRepository(_connectionString);
-
-        }
-    }
-}
+//            //Act
+//            OrderDTO actual = orderRepository.Get(1);
+//            //Assert
+//            Assert.Equal(actual.ProductId,    expected.ProductId);
+//            Assert.Equal(actual.ProductName, expected.ProductName);
+//            Assert.Equal(actual.UserId, expected.UserId);
+//        }
+//        [Fact]
+//        public void CreateOrder_Test()
+//        {
+//            //Arrange
+//            OrderRepository orderRepository = new OrderRepository(_connectionString);
+//            OrderDTO expected = new OrderDTO
+//            {
+//                UserId = 1,
+//                ProductId = 1,
+//                ProductName = "Burger"
+//            };
+//            orderRepository.CreateOrder(expected.UserId, expected.ProductId);
+//            //Act
+//            OrderDTO actual = orderRepository.Get(1);
+//            //Assert
+//            Assert.Equal(actual.ProductId,    expected.ProductId);
+//            Assert.Equal(actual.ProductName, expected.ProductName);
+//            Assert.Equal(actual.UserId, expected.UserId);
+//        }
+        
+//    }
+//}

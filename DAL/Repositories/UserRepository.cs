@@ -1,157 +1,157 @@
-﻿using _3K1SPZ_CP.DAL.Repositories;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
+using DTO;
 
-namespace _3K1SPZ_CP.DAL;
-
-public class UserRepository : BaseRepository, IUserRepository
+namespace DAL
 {
-    public bool Create(UserDTO newUser)
+    public class UserRepository : BaseRepository, IUserRepository
     {
-        try
+        public UserRepository() : base(Helper.CnnVal())
+        {
+        }
+        public bool Create(UserDTO newUser)
+        {
+            try
+            {
+                using (SqlConnection connection = new(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new(@"INSERT INTO users (login, password, disp_name) VALUES (@login, @password, @disp_name);", connection);
+                    command.Parameters.Add(new SqlParameter("@login", newUser.Login));
+                    command.Parameters.Add(new SqlParameter("@password", newUser.Password));
+                    command.Parameters.Add(new SqlParameter("@disp_name", newUser.DispName));
+                    command.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public List<UserDTO> GetAll()
         {
             using (SqlConnection connection = new(connectionString))
             {
                 connection.Open();
-                SqlCommand command = new(@"INSERT INTO users (login, password, disp_name) VALUES (@login, @password, @disp_name);", connection);
-                command.Parameters.Add(new SqlParameter("@login", newUser.Login));
-                command.Parameters.Add(new SqlParameter("@password", newUser.Password));
-                command.Parameters.Add(new SqlParameter("@disp_name", newUser.DispName));
-                command.ExecuteNonQuery();
+                SqlCommand command = new("SELECT * FROM users", connection);
+                List<UserDTO> users = new List<UserDTO>();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                        users.Add(new UserDTO()
+                        {
+                            Id = (int)reader["id"],
+                            Login = (string)reader["login"],
+                            Password = (string)reader["password"],
+                            DispName = (string)reader["disp_name"],
+                            InsertTime = (DateTime)reader["insert_time"],
+                            UpdateTime = (DateTime)reader["update_time"]
+                        });
+                }
+                return users;
             }
-            return true;
         }
-        catch
+        public bool DeleteAll()
         {
-            return false;
-        }
-    }
-    public List<UserDTO> GetAll()
-    {
-        using (SqlConnection connection = new(connectionString))
-        {
-            connection.Open();
-            SqlCommand command = new("SELECT * FROM users", connection);
-            List<UserDTO> users = new List<UserDTO>();
-            using (var reader = command.ExecuteReader())
+            try
             {
-                while (reader.Read())
-                    users.Add(new UserDTO()
-                    {
-                        Id = (int)reader["id"],
-                        Login = (string)reader["login"],
-                        Password = (string)reader["password"],
-                        DispName = (string)reader["disp_name"],
-                        InsertTime = (DateTime)reader["insert_time"],
-                        UpdateTime = (DateTime)reader["update_time"]
-                    });
+                using (SqlConnection connection = new(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new(@"DELETE FROM users;", connection);
+                    command.ExecuteNonQuery();
+                }
+                return true;
             }
-            return users;
+            catch
+            {
+                return false;
+            }
         }
-    }
-    public bool DeleteAll()
-    {
-        try
+        public UserDTO Get(string login)
         {
             using (SqlConnection connection = new(connectionString))
             {
                 connection.Open();
-                SqlCommand command = new(@"DELETE FROM users;", connection);
-                command.ExecuteNonQuery();
-            }
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
-    public UserRepository(string connectionString) : base(connectionString)
-    {
-    }
-    public UserDTO Get(string login)
-    {
-        using (SqlConnection connection = new(connectionString))
-        {
-            connection.Open();
-            SqlCommand command = new("SELECT * FROM users WHERE login = @login", connection);
-            command.Parameters.Add(new SqlParameter("@login", login));
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                    return new UserDTO()
-                    {
-                        Id = (int)reader["id"],
-                        Login = (string)reader["login"],
-                        Password = (string)reader["password"],
-                        DispName = (string)reader["disp_name"],
-                        InsertTime = (DateTime)reader["insert_time"],
-                        UpdateTime = (DateTime)reader["update_time"]
-                    };
-            }
-            return null;
-        }
-    }
-    public UserDTO Get(int id)
-    {
-        using (SqlConnection connection = new(connectionString))
-        {
-            connection.Open();
-            SqlCommand command = new("SELECT * FROM users WHERE id = @id", connection);
-            command.Parameters.Add(new SqlParameter("@id", id));
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                    return new UserDTO()
-                    {
-                        Id = (int)reader["id"],
-                        Login = (string)reader["login"],
-                        Password = (string)reader["password"],
-                        DispName = (string)reader["disp_name"],
-                        InsertTime = (DateTime)reader["insert_time"],
-                        UpdateTime = (DateTime)reader["update_time"]
-                    };
-            }
-            return null;
-        }
-    }
-    public bool UpdateDispName(string login, string newDispName)
-    {
-
-        try
-        {
-            using (SqlConnection connection = new(connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new(@"UPDATE users SET disp_name = @new_disp_name WHERE login = @login", connection);
-                command.Parameters.Add(new SqlParameter("@new_disp_name", newDispName));
+                SqlCommand command = new("SELECT * FROM users WHERE login = @login", connection);
                 command.Parameters.Add(new SqlParameter("@login", login));
-                command.ExecuteNonQuery();
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                        return new UserDTO()
+                        {
+                            Id = (int)reader["id"],
+                            Login = (string)reader["login"],
+                            Password = (string)reader["password"],
+                            DispName = (string)reader["disp_name"],
+                            InsertTime = (DateTime)reader["insert_time"],
+                            UpdateTime = (DateTime)reader["update_time"]
+                        };
+                }
+                return null;
             }
-            return true;
         }
-        catch
-        {
-            return false;
-        }
-    }
-    public bool UpdatePassword(string login, string newPassword)
-    {
-        try
+        public UserDTO Get(int id)
         {
             using (SqlConnection connection = new(connectionString))
             {
                 connection.Open();
-                SqlCommand command = new(@"UPDATE users SET password = @new_password WHERE login = @login", connection);
-                command.Parameters.Add(new SqlParameter("@new_password", newPassword));
-                command.Parameters.Add(new SqlParameter("@login", login));
-                command.ExecuteNonQuery();
+                SqlCommand command = new("SELECT * FROM users WHERE id = @id", connection);
+                command.Parameters.Add(new SqlParameter("@id", id));
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                        return new UserDTO()
+                        {
+                            Id = (int)reader["id"],
+                            Login = (string)reader["login"],
+                            Password = (string)reader["password"],
+                            DispName = (string)reader["disp_name"],
+                            InsertTime = (DateTime)reader["insert_time"],
+                            UpdateTime = (DateTime)reader["update_time"]
+                        };
+                }
+                return null;
             }
-            return true;
         }
-        catch
+        public bool UpdateDispName(string login, string newDispName)
         {
-            return false;
+
+            try
+            {
+                using (SqlConnection connection = new(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new(@"UPDATE users SET disp_name = @new_disp_name WHERE login = @login", connection);
+                    command.Parameters.Add(new SqlParameter("@new_disp_name", newDispName));
+                    command.Parameters.Add(new SqlParameter("@login", login));
+                    command.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public bool UpdatePassword(string login, string newPassword)
+        {
+            try
+            {
+                using (SqlConnection connection = new(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new(@"UPDATE users SET password = @new_password WHERE login = @login", connection);
+                    command.Parameters.Add(new SqlParameter("@new_password", newPassword));
+                    command.Parameters.Add(new SqlParameter("@login", login));
+                    command.ExecuteNonQuery();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
