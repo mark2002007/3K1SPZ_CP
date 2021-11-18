@@ -6,6 +6,7 @@ namespace BLL
     public interface IUserServices
     {
         IUserRepository _userRepository { get; set; }
+        void Add(UserDTO user);
         bool CheckPassword(string login, string password);
         UserDTO Get(string login);
         UserDTO Get(int id);

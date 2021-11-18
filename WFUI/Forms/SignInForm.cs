@@ -8,18 +8,21 @@ namespace WFUI
         private MainForm _mainForm { get; set; }
         private CommentsForm _commentsForm { get; set; }
         private TextPromptForm _textPromptForm { get; set; }
+        private SignUpForm _signUpForm { get; set; }
         
         public SignInForm(
             IUserServices userServices,
             MainForm mainForm,
             CommentsForm commentsForm,
-            TextPromptForm textPromptForm)
+            TextPromptForm textPromptForm,
+            SignUpForm signUpForm)
         {
             InitializeComponent();
             _userServices = userServices;
             _mainForm = mainForm;
             _commentsForm = commentsForm;
             _textPromptForm = textPromptForm;
+            _signUpForm = signUpForm;
         }
 
         private void LoginButton_Click(object sender, EventArgs e)
@@ -34,6 +37,10 @@ namespace WFUI
             {
                 MessageBox.Show("Invalid login or password!");
             }
+        }
+        private void RegisterButton_Click(object sender, EventArgs e)
+        {
+            _signUpForm.ShowDialog();
         }
     }
 }

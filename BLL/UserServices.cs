@@ -11,6 +11,7 @@ namespace BLL
         {
             _userRepository = userRepository;
         }
+        public void Add(UserDTO newUser) => _userRepository.Create(newUser);
         public bool CheckPassword(string login, string password) => PasswordHasher.Check(_userRepository.Get(login)?.Password, password);
         public UserDTO Get(string login) => _userRepository.Get(login);
         public UserDTO Get(int id) => _userRepository.Get(id);

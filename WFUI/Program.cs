@@ -1,6 +1,7 @@
 using BLL;
 using Autofac;
 using DAL;
+using Tools;
 
 namespace WFUI
 {
@@ -21,5 +22,5 @@ namespace WFUI
                 Application.Run(container.Resolve<SignInForm>());
             }
         }
-    }
+    }   
 }

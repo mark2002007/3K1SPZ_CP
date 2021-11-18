@@ -8,24 +8,17 @@ namespace DAL
         public UserRepository() : base(Helper.CnnVal())
         {
         }
-        public bool Create(UserDTO newUser)
+        public void Create(UserDTO newUser)
         {
-            try
+            using (SqlConnection connection = new(connectionString))
             {
-                using (SqlConnection connection = new(connectionString))
-                {
-                    connection.Open();
-                    SqlCommand command = new(@"INSERT INTO users (login, password, disp_name) VALUES (@login, @password, @disp_name);", connection);
-                    command.Parameters.Add(new SqlParameter("@login", newUser.Login));
-                    command.Parameters.Add(new SqlParameter("@password", newUser.Password));
-                    command.Parameters.Add(new SqlParameter("@disp_name", newUser.DispName));
-                    command.ExecuteNonQuery();
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
+                connection.Open();
+                SqlCommand command = new(@"spAddUser", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter("@login", newUser.Login));
+                command.Parameters.Add(new SqlParameter("@password", newUser.Password));
+                command.Parameters.Add(new SqlParameter("@disp_name", newUser.DispName));
+                command.ExecuteNonQuery();
             }
         }
         public List<UserDTO> GetAll()
@@ -51,21 +44,13 @@ namespace DAL
                 return users;
             }
         }
-        public bool DeleteAll()
+        public void DeleteAll()
         {
-            try
+            using (SqlConnection connection = new(connectionString))
             {
-                using (SqlConnection connection = new(connectionString))
-                {
-                    connection.Open();
-                    SqlCommand command = new(@"DELETE FROM users;", connection);
-                    command.ExecuteNonQuery();
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
+                connection.Open();
+                SqlCommand command = new(@"DELETE FROM users;", connection);
+                command.ExecuteNonQuery();
             }
         }
         public UserDTO Get(string login)
@@ -73,7 +58,8 @@ namespace DAL
             using (SqlConnection connection = new(connectionString))
             {
                 connection.Open();
-                SqlCommand command = new("SELECT * FROM users WHERE login = @login", connection);
+                SqlCommand command = new("spGetUserByLogin", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.Add(new SqlParameter("@login", login));
                 using (var reader = command.ExecuteReader())
                 {
@@ -96,7 +82,8 @@ namespace DAL
             using (SqlConnection connection = new(connectionString))
             {
                 connection.Open();
-                SqlCommand command = new("SELECT * FROM users WHERE id = @id", connection);
+                SqlCommand command = new("spGetUserByID", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.Add(new SqlParameter("@id", id));
                 using (var reader = command.ExecuteReader())
                 {
@@ -114,43 +101,28 @@ namespace DAL
                 return null;
             }
         }
-        public bool UpdateDispName(string login, string newDispName)
+        public void UpdateDispName(string login, string newDispName)
         {
-
-            try
+            using (SqlConnection connection = new(connectionString))
             {
-                using (SqlConnection connection = new(connectionString))
-                {
-                    connection.Open();
-                    SqlCommand command = new(@"UPDATE users SET disp_name = @new_disp_name WHERE login = @login", connection);
-                    command.Parameters.Add(new SqlParameter("@new_disp_name", newDispName));
-                    command.Parameters.Add(new SqlParameter("@login", login));
-                    command.ExecuteNonQuery();
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
+                connection.Open();
+                SqlCommand command = new(@"spUpdateDisplayName", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter("@new_disp_name", newDispName));
+                command.Parameters.Add(new SqlParameter("@login", login));
+                command.ExecuteNonQuery();
             }
         }
-        public bool UpdatePassword(string login, string newPassword)
+        public void UpdatePassword(string login, string newPassword)
         {
-            try
+            using (SqlConnection connection = new(connectionString))
             {
-                using (SqlConnection connection = new(connectionString))
-                {
-                    connection.Open();
-                    SqlCommand command = new(@"UPDATE users SET password = @new_password WHERE login = @login", connection);
-                    command.Parameters.Add(new SqlParameter("@new_password", newPassword));
-                    command.Parameters.Add(new SqlParameter("@login", login));
-                    command.ExecuteNonQuery();
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
+                connection.Open();
+                SqlCommand command = new(@"spUpdatePassword", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.Add(new SqlParameter("@new_password", newPassword));
+                command.Parameters.Add(new SqlParameter("@login", login));
+                command.ExecuteNonQuery();
             }
         }
     }

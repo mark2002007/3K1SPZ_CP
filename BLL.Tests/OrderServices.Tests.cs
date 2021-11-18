@@ -82,6 +82,7 @@ namespace BLL.Tests
             }
         }
 
+        [Fact]
         public void UserOrderCheck_Valid()
         {
             using (var mock = AutoMock.GetLoose())

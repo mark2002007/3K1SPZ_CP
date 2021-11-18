@@ -17,6 +17,7 @@ namespace WFUI
             var builder = new ContainerBuilder();
 
             builder.RegisterType<SignInForm>().AsSelf();
+            builder.RegisterType<SignUpForm>().AsSelf();
             builder.RegisterType<MainForm>().AsSelf();
             builder.RegisterType<CommentsForm>().AsSelf();
             builder.RegisterType<TextPromptForm>().AsSelf();
