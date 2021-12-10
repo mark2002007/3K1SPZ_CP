@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tools", "Tools\Tools.csproj", "{CAFF8283-7EF7-4475-B3C8-25B152DF72BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL.Tests", "BLL.Tests\BLL.Tests.csproj", "{EF51EC6A-9D8A-4190-93D8-8081A0088AE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL.Tests", "BLL.Tests\BLL.Tests.csproj", "{EF51EC6A-9D8A-4190-93D8-8081A0088AE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFGUI", "WPFGUI\WPFGUI.csproj", "{0680B8D5-0FE7-4EF9-B909-C6559913C64E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{EF51EC6A-9D8A-4190-93D8-8081A0088AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF51EC6A-9D8A-4190-93D8-8081A0088AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF51EC6A-9D8A-4190-93D8-8081A0088AE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0680B8D5-0FE7-4EF9-B909-C6559913C64E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0680B8D5-0FE7-4EF9-B909-C6559913C64E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0680B8D5-0FE7-4EF9-B909-C6559913C64E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0680B8D5-0FE7-4EF9-B909-C6559913C64E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
